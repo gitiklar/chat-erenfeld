@@ -1,4 +1,11 @@
-import { onSnapshot, query, collection, orderBy } from "firebase/firestore";
+import {
+  onSnapshot,
+  query,
+  collection,
+  orderBy,
+  addDoc,
+  serverTimestamp,
+} from "firebase/firestore";
 import { db } from "../firebaseConfig";
 
 export const getMessages = (callback) => {
@@ -12,4 +19,17 @@ export const getMessages = (callback) => {
       callback(messages);
     }
   );
+};
+
+export const sendMessage = async (user, message) => {
+  try {
+    await addDoc(collection(db, "messages"), {
+      uid: user.uid,
+      name: user.name,
+      text: message.trim(),
+      timestamp: serverTimestamp(),
+    });
+  } catch (error) {
+    console.error(error);
+  }
 };
