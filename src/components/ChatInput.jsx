@@ -1,7 +1,7 @@
 import { Input } from "@mui/material";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { sendMessage } from "../services/firebase";
+import { sendMessage } from "../services/messages";
 
 export default () => {
   const [message, setMessage] = useState("");

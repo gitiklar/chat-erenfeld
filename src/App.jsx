@@ -6,6 +6,7 @@ import Chat from "./components/ChatPage";
 import FirebaseListener from "./components/FirebaseListener";
 import Entry from "./pages/Entry";
 import Layout from "./pages/Layout";
+import Login from "./pages/Login";
 import store from "./redux/store";
 import "./styles/app.scss";
 
@@ -19,6 +20,7 @@ export default () => {
             <Route index element={<div>Choose tab</div>} />
             <Route path="chat" element={<Chat />} />
           </Route>
+          <Route path="/login" element={<Login />} />
           <Route path="*" element={<Entry />} />
         </Routes>
       </BrowserRouter>

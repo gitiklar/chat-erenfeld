@@ -1,10 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { SmileOutlined } from "@ant-design/icons";
+import { useSelector } from "react-redux";
 
 import logoImg from "../styles/images/logo.jpg";
 
 export default () => {
+  const { name } = useSelector((state) => state.auth.user);
+
   return (
     <div className="entry">
       <header className="header">
@@ -12,9 +15,15 @@ export default () => {
           <img src={logoImg} alt="logo" />
         </NavLink>
         <h1>Our new website</h1>
-        <NavLink to="/main" className="entry">
-          <u>entry</u>
-        </NavLink>
+        {name ? (
+          <NavLink to="/main" className="entry">
+            <u>entry</u>
+          </NavLink>
+        ) : (
+          <NavLink to="/login" className="entry">
+            <u>login</u>
+          </NavLink>
+        )}
       </header>
       <div className="heading"></div>
       <div className="wrapper">

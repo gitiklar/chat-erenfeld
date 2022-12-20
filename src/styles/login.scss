@@ -1,0 +1,44 @@
+.loginContainer {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: linear-gradient(
+      rgba(255, 0, 17, 0.25),
+      rgba(136, 135, 135, 0.25)
+    ),
+    url(./images/bg2.jpg);
+  background-size: cover;
+
+  .form-container {
+    padding-top: 5rem;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+
+    .wrapButtonSocial {
+      margin-bottom: 20px;
+      align-self: baseline;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 1rem;
+      justify-content: flex-start;
+      align-items: center;
+      button {
+        width: 200px;
+        padding: 0.9rem 1rem;
+        box-shadow: 0 3px 10px #4068c042;
+        padding-inline-end: 3.5rem;
+        background-repeat: no-repeat;
+        background-position: calc(100% - 0.9rem) center;
+        &.googBtn {
+          background-image: url("./images/google.svg");
+        }
+      }
+    }
+  }
+}

@@ -1,16 +1,21 @@
 import React from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Navigate, NavLink, Outlet } from "react-router-dom";
 
 import logoImg from "../styles/images/logo.jpg";
 
 export default () => {
+  const { name } = useSelector((state) => state.auth.user);
+  if (!name) {
+    return <Navigate to="/login" />;
+  }
   return (
     <div className="layout">
       <header className="header">
         <NavLink to="/">
           <img src={logoImg} alt="logo" />
         </NavLink>
-        <div className="divHello">Hello guest</div>
+        <div className="divHello">{name}</div>
       </header>
       <div className="heading">
         <div className="menuLine">

@@ -4,8 +4,10 @@ export default () => {
   const messages = useSelector((state) => state.chat.messages);
   return (
     <ul>
-      {messages.map((message, index) => (
-        <li key={index}>{message.text}</li>
+      {messages.map((message) => (
+        <li key={message.id}>
+          {message.text} {message.name}
+        </li>
       ))}
     </ul>
   );
