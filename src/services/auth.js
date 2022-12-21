@@ -4,7 +4,12 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/database";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  signOut,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 const BASE_REF = "users";
 
@@ -44,7 +49,23 @@ export const signUpUser = async (email, password) => {
   }
 };
 
-export const saveNewUser = async (user, username) => {
+export const signInUser = async (email, password) => {
+  const auth = getAuth();
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    return userCredential.user;
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(`${errorCode}: ${errorMessage}`);
+  }
+};
+
+export const saveNewUser = async (user, username, password) => {
   try {
     return await firebase
       .database()
@@ -54,9 +75,21 @@ export const saveNewUser = async (user, username) => {
         uid: user.uid,
         email: user.email,
         username,
+        password,
         ...user.metadata,
       });
   } catch (err) {
     console.log(err);
   }
+};
+
+export const logOut = () => {
+  const auth = getAuth();
+  signOut(auth)
+    .then(() => {
+      // Sign-out successful.
+    })
+    .catch((error) => {
+      // An error happened.
+    });
 };

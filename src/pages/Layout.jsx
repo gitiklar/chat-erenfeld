@@ -6,6 +6,7 @@ import {
   getIsUserLoggedIn,
   getLoggedInFirebaseUser,
 } from "../redux/auth/selectors";
+import { logOut } from "../services/auth";
 import logoImg from "../styles/images/logo.jpg";
 
 export default () => {
@@ -13,15 +14,23 @@ export default () => {
   const { username } = useSelector(getLoggedInFirebaseUser);
 
   if (!isUserLoggedIn) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/" />;
   }
+
+  const logOutHandler = () => {
+    logOut();
+  };
+
   return (
     <div className="layout">
       <header className="header">
         <NavLink to="/">
           <img src={logoImg} alt="logo" />
         </NavLink>
-        <div className="divHello">{username}</div>
+        <div className="userContainer">
+          <div className="divHello">{`Hello ${username || ""}`}</div>
+          <NavLink onClick={logOutHandler}>logout</NavLink>
+        </div>
       </header>
       <div className="heading">
         <div className="menuLine">

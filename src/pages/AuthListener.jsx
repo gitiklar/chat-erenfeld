@@ -9,7 +9,11 @@ export default () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isUserLoggedIn) navigate("/main");
+    if (isUserLoggedIn) {
+      navigate("/main");
+    } else {
+      navigate("/");
+    }
   }, [isUserLoggedIn]);
 
   return <></>;

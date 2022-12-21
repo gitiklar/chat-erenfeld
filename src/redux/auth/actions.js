@@ -1,18 +1,20 @@
-import { createAction, createAsyncThunk, nanoid } from "@reduxjs/toolkit";
-import { saveNewUser, signUpUser } from "../../services/auth";
+import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { saveNewUser, signInUser, signUpUser } from "../../services/auth";
 
 export const initApp = createAction("auth/initApp");
 
-export const login = createAction("auth/login", (name) => {
-  return {
-    payload: { uid: nanoid(), name },
-  };
-});
+
+export const signIn = createAsyncThunk(
+  "auth/signIn",
+  async ({ email, password }, { dispatch, getState }) => {
+     await signInUser(email, password);
+  }
+);
 
 export const signUp = createAsyncThunk(
-  "auth/signIn",
+  "auth/signUp",
   async ({ username, email, password }, { dispatch, getState }) => {
     const newUser = await signUpUser(email, password);
-    await saveNewUser(newUser, username);
+    await saveNewUser(newUser, username, password);
   }
 );

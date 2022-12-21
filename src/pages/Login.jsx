@@ -4,13 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button, Form, Input } from "antd";
 import { MailOutlined, LockOutlined } from "@ant-design/icons";
 
-import { login } from "../redux/auth/actions";
+import { signIn } from "../redux/auth/actions";
+
 
 const Login = () => {
   const dispatch = useDispatch();
 
   const onLogin = (loginFormData) => {
-    dispatch(login(loginFormData));
+    dispatch(signIn(loginFormData));
   };
 
   return (
