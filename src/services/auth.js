@@ -1,55 +1,62 @@
-import firebase from "firebase/app";
-import "firebase/database";
 import { Observable } from "rxjs";
 
-class BlocksService {
-  BASE_REF = "blocks";
+import firebase from "firebase/compat/app";
+import "firebase/compat/database";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
-  async fetchBlocks(uid) {
-    return (
-      (
-        await firebase.database().ref(this.BASE_REF).child(uid).once("value")
-      ).val() || {}
+const BASE_REF = "users";
+
+export const fetchUser = async (uid) => {
+  return (
+    (await firebase.database().ref(BASE_REF).child(uid).once("value")).val() ||
+    {}
+  );
+};
+
+export const listenAuthChange = () => {
+  return new Observable((subscriber) => {
+    firebase.auth().onAuthStateChanged(
+      (user) => {
+        subscriber.next(user);
+      },
+      (error) => {
+        subscriber.error(error);
+      }
     );
+  });
+};
+
+export const signUpUser = async (email, password) => {
+  const auth = getAuth();
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    return userCredential.user;
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(`${errorCode}: ${errorMessage}`);
   }
+};
 
-  listenBlocksAdded(uid) {
-    return new Observable((subscriber) => {
-      const ref = firebase
-        .database()
-        .ref(this.BASE_REF)
-        .child(uid)
-        .orderByChild("timeStamp")
-        .startAt(Date.now());
-
-      const callbackFn = ref.on(
-        "child_added",
-        (snapshot) => subscriber.next({ [snapshot.key]: snapshot.val() }),
-        (error) => subscriber.error(error)
-      );
-      return () => ref.off("child_added", callbackFn);
-    });
-  }
-
-  blockUser(uid, blockedUser) {
-    return firebase
+export const saveNewUser = async (user, username) => {
+  try {
+    return await firebase
       .database()
-      .ref(this.BASE_REF)
-      .child(uid)
-      .child(blockedUser)
+      .ref(BASE_REF)
+      .child(user.uid)
       .set({
-        timeStamp: firebase.database.ServerValue.TIMESTAMP,
+        uid: user.uid,
+        email: user.email,
+        username,
+        ...user.metadata,
       });
+  } catch (err) {
+    console.log(err);
   }
-
-  unblockUser(uid, blockedUser) {
-    return firebase
-      .database()
-      .ref(this.BASE_REF)
-      .child(uid)
-      .child(blockedUser)
-      .remove();
-  }
-}
-
-export default new BlocksService();
+};

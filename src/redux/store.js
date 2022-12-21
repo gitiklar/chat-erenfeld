@@ -1,12 +1,19 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { createEpicMiddleware } from "redux-observable";
 import chatReducer from "./chat/slice";
 import authReducer from "./auth/slice";
+import rootEffects from "./effects";
+
+const epicMiddleware = createEpicMiddleware();
 
 const store = configureStore({
   reducer: {
     chat: chatReducer,
-    auth: authReducer
+    auth: authReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(epicMiddleware),
 });
-window.store = store;
+epicMiddleware.run(rootEffects);
+
 export default store;

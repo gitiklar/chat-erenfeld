@@ -1,31 +1,55 @@
-import { Button } from "reactstrap";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Button, Form, Input } from "antd";
+import { MailOutlined, LockOutlined } from "@ant-design/icons";
 
 import { login } from "../redux/auth/actions";
-import { Input } from "antd";
 
 const Login = () => {
-  const [name, setName] = useState("");
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  const onLogin = () => {
-    if (!name) return;
-    dispatch(login(name));
-    navigate("/main");
+  const onLogin = (loginFormData) => {
+    dispatch(login(loginFormData));
   };
 
   return (
     <div className="loginContainer">
       <div className="form-container">
-        <div className="wrapButtonSocial">
-          <Input value={name} onChange={(e) => setName(e.target.value)} />
-          <Button onClick={onLogin} size="lg" outline color="primary">
-            login
-          </Button>
-        </div>
+        <Form dir="ltr" name="normal_login" className="form" onFinish={onLogin}>
+          <Form.Item
+            name="email"
+            rules={[{ required: true, message: "Please enter email!" }]}
+          >
+            <Input
+              prefix={<MailOutlined className="site-form-item-icon" />}
+              placeholder="email"
+            />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            rules={[{ required: true, message: "Please enter password!" }]}
+          >
+            <Input
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              type="password"
+              placeholder="password"
+            />
+          </Form.Item>
+          <Form.Item>
+            <Link
+              to={{ pathname: "/register" }}
+              className="register colorWhite"
+            >
+              Or register now!
+            </Link>
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" className="colorWhite">
+              login
+            </Button>
+          </Form.Item>
+        </Form>
       </div>
     </div>
   );

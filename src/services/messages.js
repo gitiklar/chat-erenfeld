@@ -7,6 +7,7 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { db } from "../firebaseConfig";
+debugger;
 
 export const getMessages = (callback) => {
   return onSnapshot(

@@ -4,9 +4,10 @@ import { SmileOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 
 import logoImg from "../styles/images/logo.jpg";
+import { getIsUserLoggedIn } from "../redux/auth/selectors";
 
 export default () => {
-  const { name } = useSelector((state) => state.auth.user);
+  const isUserLoggedIn = useSelector(getIsUserLoggedIn);
 
   return (
     <div className="entry">
@@ -15,7 +16,7 @@ export default () => {
           <img src={logoImg} alt="logo" />
         </NavLink>
         <h1>Our new website</h1>
-        {name ? (
+        {isUserLoggedIn ? (
           <NavLink to="/main" className="entry">
             <u>entry</u>
           </NavLink>

@@ -22,6 +22,8 @@
     "react-scripts": "5.0.1",
     "reactstrap": "^9.1.5",
     "redux": "^4.2.0",
+    "redux-observable": "^2.0.0",
+    "rxjs": "^7.8.0",
     "sass": "^1.56.1",
     "web-vitals": "^2.1.4"
   },

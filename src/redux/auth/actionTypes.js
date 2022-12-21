@@ -1,0 +1,9 @@
+export const AUTH_APP_INIT = "auth/AUTH_APP_INIT";
+export const AUTH_LOGGED_IN = "auth/AUTH_LOGGED_IN";
+export const AUTH_LOGGED_OUT = "auth/AUTH_LOGGED_OUT";
+export const AUTH_LOG_OUT = "auth/AUTH_LOG_OUT";
+export const AUTH_ALREADY_LOGGED_IN = "auth/AUTH_ALREADY_LOGGED_IN";
+export const AUTH_CHANGE_FAILED = "auth/AUTH_CHANGE_FAILED";
+export const AUTH_FETCH_FIREBASE_USER = "auth/AUTH_FETCH_FIREBASE_USER";
+export const AUTH_FETCH_FIREBASE_USER_FAILED =
+  "auth/AUTH_FETCH_FIREBASE_USER_FAILED";

@@ -1,4 +1,5 @@
-.loginContainer {
+.loginContainer,
+.registerContainer {
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -19,25 +20,28 @@
     justify-content: center;
     backdrop-filter: blur(8px);
 
-    .wrapButtonSocial {
-      margin-bottom: 20px;
-      align-self: baseline;
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      gap: 1rem;
-      justify-content: flex-start;
-      align-items: center;
+    .form {
+      width: 50vw;
+
+      .colorWhite {
+        color: white;
+      }
+
       button {
-        width: 200px;
-        padding: 0.9rem 1rem;
-        box-shadow: 0 3px 10px #4068c042;
-        padding-inline-end: 3.5rem;
-        background-repeat: no-repeat;
-        background-position: calc(100% - 0.9rem) center;
-        &.googBtn {
-          background-image: url("./images/google.svg");
-        }
+        background-color: transparent;
+        border-color: white;
+      }
+
+      .anticon {
+        margin-left: 20px;
+      }
+
+      .ant-select-selection-placeholder,
+      .ant-select-selection-item {
+        margin-right: 20px;
+      }
+      .ant-form-item-explain.ant-form-item-explain-error {
+        color: white;
       }
     }
   }

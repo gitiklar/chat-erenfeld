@@ -1,18 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { login } from "./actions";
+import * as types from "./actionTypes";
 
-const initialState = {
-  user: JSON.parse(localStorage.getItem("user")) || {},
-};
+const initialState = {};
 
 const slice = createSlice({
   name: "auth",
   initialState,
   extraReducers: {
-    [login](state, action) {
-      state.user = action.payload;
-      localStorage.setItem("user", JSON.stringify(action.payload));
+    [types.AUTH_LOGGED_IN](state, action) {
+      state.user = action.user;
+      
+    },
+    [types.AUTH_FETCH_FIREBASE_USER](state, action) {
+      state.firebaseUser = action.firebaseUser;
     },
   },
 });
