@@ -9,6 +9,7 @@ export default () => {
   const user = useSelector(getLoggedInFirebaseUser);
 
   const onSend = async () => {
+    if (!message) return;
     saveMessage({ text: message, uid: user.uid, username: user.username });
     setMessage("");
   };
