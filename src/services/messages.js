@@ -5,7 +5,10 @@ import { Observable } from "rxjs";
 const BASE_REF = "messages";
 
 export const saveMessage = (message) => {
-  firebase.database().ref(BASE_REF).push(message);
+  firebase
+    .database()
+    .ref(BASE_REF)
+    .push({ ...message, timeStamp: firebase.database.ServerValue.TIMESTAMP });
 };
 
 export const fetchChatMessages = async () => {
