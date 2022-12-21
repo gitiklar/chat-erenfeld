@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-// import Chat from "./components/ChatPage";
-// import FirebaseListener from "./components/FirebaseListener";
+import Chat from "./components/ChatPage";
 import Entry from "./pages/Entry";
 import Layout from "./pages/Layout";
 import Login from "./pages/Login";
@@ -21,14 +20,13 @@ export default () => {
 
   return (
     <BrowserRouter>
-      {/* <FirebaseListener /> */}
       <AuthListener />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/main" element={<Layout />}>
           <Route index element={<div>Choose tab</div>} />
-          {/* <Route path="chat" element={<Chat />} /> */}
+          <Route path="chat" element={<Chat />} />
         </Route>
         <Route path="*" element={<Entry />} />
       </Routes>

@@ -1,14 +1,15 @@
 import { Input } from "@mui/material";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { sendMessage } from "../services/messages";
+import { getLoggedInFirebaseUser } from "../redux/auth/selectors";
+import { saveMessage } from "../services/messages";
 
 export default () => {
   const [message, setMessage] = useState("");
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector(getLoggedInFirebaseUser);
 
   const onSend = async () => {
-    sendMessage(user, message);
+    saveMessage({ text: message, uid: user.uid, username: user.username });
     setMessage("");
   };
 

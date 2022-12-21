@@ -1,18 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import { fetchChatMessagesSuccessfully } from "./actions";
+import * as types from "./actionTypes";
+
 const initialState = {
-  messages: [],
+  messages: {},
 };
 
 const slice = createSlice({
   name: "chat",
   initialState,
-  reducers: {
-    updateMessages(state, action) {
+  extraReducers: {
+    [fetchChatMessagesSuccessfully](state, action) {
       state.messages = action.payload;
+    },
+    [types.CHAT_MESSAGES_ADDED](state, action) {
+      state.messages = { ...state.messages, ...action.payload };
     },
   },
 });
 
-export const { updateMessages } = slice.actions;
 export default slice.reducer;

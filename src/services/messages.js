@@ -1,35 +1,25 @@
-import {
-  onSnapshot,
-  query,
-  collection,
-  orderBy,
-  addDoc,
-  serverTimestamp,
-} from "firebase/firestore";
-import { db } from "../firebaseConfig";
+import firebase from "firebase/compat/app";
 
-export const getMessages = (callback) => {
-  return onSnapshot(
-    query(collection(db, "messages"), orderBy("timestamp", "asc")),
-    (querySnapshot) => {
-      const messages = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      callback(messages);
-    }
-  );
+import { Observable } from "rxjs";
+
+const BASE_REF = "messages";
+
+export const saveMessage = (message) => {
+  firebase.database().ref(BASE_REF).push(message);
 };
 
-export const sendMessage = async (user, message) => {
-  try {
-    await addDoc(collection(db, "messages"), {
-      uid: user.uid,
-      name: user.name,
-      text: message.trim(),
-      timestamp: serverTimestamp(),
-    });
-  } catch (error) {
-    console.error(error);
-  }
+export const fetchChatMessages = async () => {
+  return (await firebase.database().ref(BASE_REF).once("value")).val() || {};
+};
+
+export const listenNewMessages = () => {
+  return new Observable((subscriber) => {
+    const ref = firebase.database().ref(BASE_REF).limitToLast(1);
+    const callbackFn = ref.on(
+      "child_added",
+      (snapshot) => subscriber.next({ [snapshot.key]: snapshot.val() }),
+      (error) => subscriber.error(error)
+    );
+    return () => ref.off("child_added", callbackFn);
+  });
 };

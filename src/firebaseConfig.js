@@ -1,5 +1,5 @@
 import firebase from "firebase/compat/app";
-import { getFirestore } from "firebase/firestore";
+
 const firebaseConfig = {
   apiKey: "AIzaSyBZLYpohH5L-p3QF2imkJREaywbbE_6aiI",
   authDomain: "chat-erenfeld.firebaseapp.com",
@@ -11,5 +11,4 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
-export const db = getFirestore(app);
+firebase.initializeApp(firebaseConfig);
